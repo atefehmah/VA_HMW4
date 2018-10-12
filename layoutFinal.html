@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/topojson.v2.min.js"></script>
+        <style type="text/css">
+            *{
+                box-sizing: border-box;
+            }
+            html, body{
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+            #left, #right {
+                width:50%;
+                height: 100%;
+                float:left;
+            }
+
+            .states :hover {
+                fill: orange;
+                }
+
+            .state-borders {
+                fill: none;
+                stroke: #fff;
+                stroke-width: 0.5px;
+                stroke-linejoin: round;
+                stroke-linecap: round;
+                pointer-events: none;
+                }
+
+
+                svg .myrect {
+            fill: steelblue;
+            stroke-width: 0px;
+            pointer-events: all;
+        }
+        svg .myrect:hover {
+            fill: red;
+        }
+
+        div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 100px;					
+    height: 50px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+        </style>
+
+    </head>
+
+    <body>
+        <div id="left"></div>
+        <div id="right"></div>
+        <script src="js/map.js"></script>
+        <script src="js/bar.js"></script>
+        <script>
+
+            var allData;
+            var bar;
+            var map;
+
+            var tooltip = d3.select("body").append("div")	
+                .attr("class", "tooltip")				
+                .style("opacity", 0);
+
+            d3.csv("data/losses2015_transformed.csv").then(function(data){
+                allData = data;
+                    
+                allData.forEach(element => {
+                    if (element.State_Code.length===1){
+                        element.id = "0" + element.State_Code;
+                    } else {
+                        element.id = element.State_Code
+                    }
+                });
+                console.log(allData);
+                map = new Map();
+                bar = new Bar();
+            })
+
+
+        </script>
+    </body>
+</html>
